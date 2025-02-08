@@ -1,0 +1,19 @@
+{
+  "name": "todoplanner.app",
+  "type": "module",
+  "author": {
+    "email": "gurvirsingh.academic@gmail.com",
+    "name": "Gurvir Singh"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.147",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "sst": "3.7.15"
+  }
+}
