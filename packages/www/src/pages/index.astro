@@ -1,11 +1,44 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Line from "../components/Line.astro";
+import Layout from "../layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const lines = [
+  {
+    text: "# use the command below to open application",
+  },
+  {
+    text: "ssh todoplanner.app",
+    fontStyle: "bold",
+  },
+];
 ---
 
 <Layout>
-	<Welcome />
+  <main class="bg-black w-full h-full">
+    <!-- Mobile Browser Fix -->
+    <div class="bg-black h-[1px]"></div>
+    <!-- Tab Navigation -->
+    <nav class="bg-zinc-900 h-10 w-full border-stone-700 border-b">
+      <div
+        class="h-full w-max px-6 border-r border-stone-700 grid place-items-center"
+      >
+        <span class="text-white font-medium">terminal</span>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="w-full h-full">
+      <!-- Spacer -->
+      <div class="h-20 border-b border-zinc-800"></div>
+
+      <!-- Lines Container-->
+      <div class="flex flex-col">
+        {
+          lines.map((line, idx) => (
+            <Line text={line.text} fontStyle={line.fontStyle} idx={idx} />
+          ))
+        }
+      </div>
+    </div>
+  </main>
 </Layout>
