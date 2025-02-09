@@ -1,6 +1,14 @@
 ---
 import "../styles/global.css";
 import "@fontsource/ibm-plex-mono";
+import SEO from "../components/SEO.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,10 +18,40 @@ import "@fontsource/ibm-plex-mono";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>TodoPlanner</title>
+    <SEO title={title} description={description} />
   </head>
   <body class="w-screen h-screen overflow-hidden">
     <slot />
+
+    <!-- Hidden SEO Content -->
+    <div class="sr-only">
+      <h1>TodoPlanner.app - Terminal-style Todo Management</h1>
+      <h2>Features</h2>
+      <ul>
+        <li>SSH-based access for a true terminal experience</li>
+        <li>Familiar command-line interface</li>
+        <li>Secure and efficient task management</li>
+        <li>Perfect for developers and terminal enthusiasts</li>
+        <li>Cross-platform compatibility</li>
+      </ul>
+
+      <h2>How It Works</h2>
+      <p>
+        TodoPlanner.app brings the power of terminal-based workflows to task
+        management. Simply SSH into todoplanner.app to access your tasks using
+        familiar command-line syntax. Organize, track, and complete tasks with
+        the efficiency of terminal commands.
+      </p>
+
+      <h2>Why Choose TodoPlanner.app</h2>
+      <ul>
+        <li>Streamlined developer-friendly interface</li>
+        <li>No context switching from your terminal</li>
+        <li>Fast and responsive experience</li>
+        <li>Keyboard-driven workflow</li>
+        <li>Minimal and distraction-free design</li>
+      </ul>
+    </div>
   </body>
 </html>
 
