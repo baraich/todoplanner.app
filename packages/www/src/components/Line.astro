@@ -1,23 +1,62 @@
 ---
 interface Props {
-  text: string;
   idx: number;
-  fontStyle?: string;
+  text: string;
+  glow?: boolean;
+  lineActive?: boolean;
 }
 
-const { text, fontStyle, idx } = Astro.props;
+const { text, lineActive, glow, idx } = Astro.props;
 ---
 
 <div
-  class="grid grid-cols-[auto_1fr] border-b border-zinc-800 hover:bg-zinc-900 h-auto"
+  class:list={[
+    "line grid grid-cols-[auto_1fr] border-b border-b-zinc-800 hover:bg-zinc-900 h-auto relative overflow-hidden",
+    {
+      "border-l-2 border-l-orange-600": lineActive,
+    },
+  ]}
 >
   <!-- Line Number -->
-  <div class="text-zinc-400 p-4 px-8">{idx + 1}</div>
+  <div class="text-zinc-400 p-4 px-8 text-sm">{idx + 1}</div>
 
   <!-- Line Text -->
   <div
-    class={`${fontStyle == "bold" ? "text-zinc-200" : "text-zinc-400"} h-full flex items-center`}
+    class:list={[
+      "text-gray-400 w-max h-full flex items-center",
+      {
+        "text-white": glow,
+      },
+    ]}
   >
     {text}
   </div>
 </div>
+
+<script>
+  const lines = document.querySelectorAll(".line");
+  let timeoutId: Timer | null = null;
+
+  function removeBorder(lines: NodeListOf<Element>) {
+    lines.forEach((line) => {
+      line.classList.remove("border-l-2");
+      line.classList.remove("border-l-orange-600");
+    });
+  }
+
+  lines.forEach((line) => {
+    line?.addEventListener("click", () => {
+      removeBorder(lines);
+      line.classList.add("border-l-2");
+      line.classList.add("border-l-orange-600");
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        removeBorder(lines);
+      }, 1000);
+    });
+  });
+</script>

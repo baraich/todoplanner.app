@@ -5,12 +5,9 @@
 
 declare module "sst" {
   export interface Resource {
-    "TodoPlannerAstroWebsite": {
+    "TodoPlannerWebsite": {
       "type": "sst.aws.Astro"
       "url": string
-    }
-    "TodoPlannerVPC": {
-      "type": "sst.aws.Vpc"
     }
   }
 }

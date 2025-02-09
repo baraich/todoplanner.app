@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@layer base {
-  * {
-    font-family: "IBM Plex Mono", monospace !important;
-  }
+* {
+  font-family: "IBM Plex Mono", monospace !important;
 }
