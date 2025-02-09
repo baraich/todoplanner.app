@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Line from "../components/Line.astro";
+
+const lines = [
+  {
+    text: "# Inspiration",
+    glow: true,
+  },
+  {
+    text: "",
+  },
+  {
+    text: "# todoplanner.app's terminal interface is inspired by terminal.shop -",
+  },
+  {
+    text: "# an amazingly awesome project created by @thdxr, @adamdotdev,",
+  },
+  {
+    text: "# @theprimeagen, @teej_dv, and @iamdavidhill at Terminal Products, Inc.",
+  },
+  {
+    text: "",
+  },
+  {
+    text: "# We're grateful for their innovative design that inspired our work.",
+  },
+  {
+    text: "",
+  },
+  {
+    text: "# Visit the original project:",
+  },
+  {
+    text: "https://terminal.shop",
+    glow: true,
+  },
+];
+---
+
+<Layout>
+  <main class="bg-black w-full h-full">
+    <!-- Mobile Browser Fix -->
+    <div class="bg-black h-[1px]"></div>
+    <!-- Tab Navigation -->
+    <nav class="bg-zinc-900 h-10 w-full flex border-stone-700 border-b">
+      <a href="/" class="nav-link">
+        <div
+          class="h-full w-max px-6 border-r border-stone-700 grid place-items-center"
+        >
+          <span class="text-white font-medium">terminal</span>
+        </div>
+      </a>
+      <a href="/inspiration" class="nav-link">
+        <div
+          class="h-full w-max px-6 border-r border-stone-700 grid place-items-center"
+        >
+          <span class="text-white font-medium">inspiration</span>
+        </div>
+      </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="w-full h-full">
+      <!-- Spacer -->
+      <div class="h-20 border-b border-zinc-800"></div>
+
+      <!-- Lines Container-->
+      <div class="flex flex-col">
+        {
+          lines.map((line, idx) => (
+            <Line text={line.text} glow={line.glow} idx={idx} />
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = (e.currentTarget as HTMLAnchorElement).getAttribute(
+          "href"
+        );
+        if (href === window.location.pathname) {
+          e.preventDefault();
+        }
+      });
+    });
+  });
+</script>
