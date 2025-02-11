@@ -15,18 +15,13 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Astro("TodoPlannerWebsite", {
-      domain: {
-        name: "todoplanner.app",
-        dns: sst.cloudflare.dns({
-          zone: "2a190c1e0fb8d59ad02cb4646c8b6ce9",
-        }),
-      },
+    new sst.cloudflare.StaticSite("TodoPlannner", {
       path: "./packages/www",
-      buildCommand: "bun run build",
-      dev: {
-        command: "bun run dev",
+      build: {
+        command: "bun run build",
+        output: "./dist",
       },
+      domain: "todoplanner.app",
     });
 
     /**
@@ -36,12 +31,14 @@ export default $config({
      * This ensure scalability, security and efficent resource management
      * for workloads running in the container.
      */
+    // TODO: Uncomment this when we have a use case for it
     // const todoPlannerVpc = new sst.aws.Vpc("TodoPlannerVPC", {});
 
     /**
      * Creating an Amazon ECS Cluster to manage and orchestrate
      * containerized applications within the specified VPC.
      */
+    // TODO: Uncomment this when we have a use case for it
     // const ecsCluster = new sst.aws.Cluster("TodoPlannerCluster", {
     //   vpc: todoPlannerVpc,
     //   forceUpgrade: "v2",

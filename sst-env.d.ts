@@ -5,8 +5,8 @@
 
 declare module "sst" {
   export interface Resource {
-    "TodoPlannerWebsite": {
-      "type": "sst.aws.Astro"
+    "TodoPlannner": {
+      "type": "sst.cloudflare.StaticSite"
       "url": string
     }
   }

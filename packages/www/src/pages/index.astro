@@ -4,15 +4,6 @@ import Layout from "../layouts/Layout.astro";
 
 const lines = [
   {
-    text: "# Welcome to TodoPlanner.app",
-  },
-  {
-    text: "# Your terminal-based task management solution",
-  },
-  {
-    text: "",
-  },
-  {
     text: "# Use the command below to start organizing:",
   },
   {
@@ -20,31 +11,10 @@ const lines = [
     glow: true,
     lineActive: true,
   },
-  {
-    text: "",
-  },
-  {
-    text: "# Key Features:",
-  },
-  {
-    text: "- SSH-based access",
-  },
-  {
-    text: "- Command-line interface",
-  },
-  {
-    text: "- Secure task management",
-  },
-  {
-    text: "- Developer-friendly",
-  },
 ];
 ---
 
-<Layout
-  title="TodoPlanner.app - Terminal-style Todo Management for Developers"
-  description="Access your tasks through SSH with TodoPlanner.app. A modern terminal-based todo app designed for developers who love the command line."
->
+<Layout title="TodoPlanner.app">
   <main class="bg-black w-full h-full">
     <!-- Mobile Browser Fix -->
     <div class="bg-black h-[1px]"></div>
