@@ -5,6 +5,20 @@
 
 declare module "sst" {
   export interface Resource {
+    "SSH": {
+      "service": string
+      "type": "sst.aws.Service"
+      "url": string
+    }
+    "TodoPlannerKey": {
+      "private": string
+      "public": string
+      "type": "tls.index/privateKey.PrivateKey"
+    }
+    "TodoPlannerVPC": {
+      "bastion": string
+      "type": "sst.aws.Vpc"
+    }
     "TodoPlannner": {
       "type": "sst.cloudflare.StaticSite"
       "url": string

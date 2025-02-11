@@ -88,7 +88,7 @@ export default $config({
       link: [todoPlannerKey],
       loadBalancer: {
         domain: {
-          name: "todoplanner.app",
+          name: "cli.todoplanner.app",
           dns: sst.cloudflare.dns(),
         },
         rules: [{ listen: "22/tcp", forward: "2222/tcp" }],

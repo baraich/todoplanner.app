@@ -1,5 +1,12 @@
 package resource
 
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"reflect"
+)
+
 // TodoPlannerKye structs holds the public and private key information
 // related to the TodoPlanner application. These keys are used for
 // authentication purposed and were set using the (node)sst.Linkable class.
@@ -19,4 +26,18 @@ type _Resource struct {
 // for tasks that require access to infrastructure.
 var Resource _Resource
 
-// TODO: Implementation of reflection technique to populate resources.
+func init() {
+	val := reflect.ValueOf(&Resource).Elem()
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		typeField := val.Type().Field(i)
+		envVarName := fmt.Sprintf("SST_RESOURCE_%s", typeField.Name)
+		envValue, exists := os.LookupEnv(envVarName)
+		if !exists {
+			panic(fmt.Sprintf("Environment variable %s is required!", envVarName))
+		}
+		if err := json.Unmarshal([]byte(envValue), field.Addr().Interface()); err != nil {
+			panic(err)
+		}
+	}
+}
