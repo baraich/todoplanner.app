@@ -1,62 +1,94 @@
 ---
 interface Props {
-  idx: number;
-  text: string;
-  glow?: boolean;
-  lineActive?: boolean;
+  content: string;
 }
 
-const { text, lineActive, glow, idx } = Astro.props;
+const { content } = Astro.props;
+
+function parseLines(raw: string) {
+  return raw
+    .split("\n")
+    .map((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) return null;
+      let glow = false;
+      let lineActive = false;
+      const match = trimmed.match(/\[(.+)\]$/);
+      let text = trimmed;
+      if (match) {
+        const tags = match[1].split(",").map((tag) => tag.trim());
+        glow = tags.includes("glow");
+        lineActive = tags.includes("active");
+        text = trimmed.replace(/\s*\[.+\]$/, "");
+      }
+      return { text, glow, lineActive };
+    })
+    .filter((line) => line !== null);
+}
 ---
 
-<div
-  class:list={[
-    "line grid grid-cols-[auto_1fr] border-b border-b-zinc-800 hover:bg-zinc-900 h-auto relative overflow-hidden",
-    {
-      "border-l-2 border-l-orange-600": lineActive,
-    },
-  ]}
->
-  <!-- Line Number -->
-  <div class="text-zinc-400 p-4 px-8 text-sm">{idx + 1}</div>
+<>
+  {parseLines(content).map((line, index) => (
+    <div
+      class:list={[
+        "line grid grid-cols-[auto_1fr] border-b border-b-zinc-800 hover:bg-zinc-900 h-auto relative overflow-hidden",
+        { "border-l-4 border-l-orange-600": line.glow },
+      ]}
+      data-permanent-glow={line.glow}
+    >
+      <!-- Line Number -->
+      <div class="text-zinc-400 p-8 px-16 text-2xl">{index + 1}</div>
 
-  <!-- Line Text -->
-  <div
-    class:list={[
-      "text-gray-400 w-max h-full flex items-center",
-      {
-        "text-white": glow,
-      },
-    ]}
-  >
-    {text}
-  </div>
-</div>
+      <!-- Line Text -->
+      <div
+        class:list={[
+          "text-gray-400 text-2xl w-max h-full flex items-center",
+          { "text-white": line.glow },
+        ]}
+      >
+        {line.text}
+      </div>
+    </div>
+  ))}
+</>
 
 <script>
   const lines = document.querySelectorAll(".line");
   let timeoutId: Timer | null = null;
 
-  function removeBorder(lines: NodeListOf<Element>) {
+  function removeTemporaryGlow(lines: NodeListOf<Element>) {
     lines.forEach((line) => {
-      line.classList.remove("border-l-2");
-      line.classList.remove("border-l-orange-600");
+      if (line.getAttribute("data-permanent-glow") !== "true") {
+        line.classList.remove("border-l-4");
+        line.classList.remove("border-l-orange-600");
+        const textDiv = line.querySelector("div:nth-child(2)");
+        if (textDiv) {
+          textDiv.classList.remove("text-white");
+        }
+      }
     });
   }
 
   lines.forEach((line) => {
-    line?.addEventListener("click", () => {
-      removeBorder(lines);
-      line.classList.add("border-l-2");
+    if (line.getAttribute("data-permanent-glow") === "true") return;
+
+    line.addEventListener("click", () => {
+      removeTemporaryGlow(lines);
+
+      line.classList.add("border-l-4");
       line.classList.add("border-l-orange-600");
+      const textDiv = line.querySelector("div:nth-child(2)");
+      if (textDiv) {
+        textDiv.classList.add("text-white");
+      }
 
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
 
       timeoutId = setTimeout(() => {
-        removeBorder(lines);
-      }, 1000);
+        removeTemporaryGlow(lines);
+      }, 2000);
     });
   });
 </script>
