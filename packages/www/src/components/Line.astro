@@ -37,12 +37,12 @@ function parseLines(raw: string) {
       data-permanent-glow={line.glow}
     >
       <!-- Line Number -->
-      <div class="text-zinc-400 p-8 px-16 text-2xl">{index + 1}</div>
+      <div class="text-zinc-400 p-4 px-8 md:p-8 md:px-16 text-base md:text-2xl">{index + 1}</div>
 
       <!-- Line Text -->
       <div
         class:list={[
-          "text-gray-400 text-2xl w-max h-full flex items-center",
+          "text-gray-400 text-base md:text-2xl w-full md:w-max h-full flex items-center break-words",
           { "text-white": line.glow },
         ]}
       >
